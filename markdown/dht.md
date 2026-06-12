@@ -1,10 +1,10 @@
 # DHT
 
-The AtomVM DHT library can be used to drive DHT11 and DHT12 temperature and humidity sensors that can be attached to ESP32 devices.
+The AtomVM DHT library can be used to drive DHT11 and DHT22 temperature and humidity sensors that can be attached to ESP32 devices.
 
 The AtomVM DHT library is only supported on the ESP32 platform.
 
-> Note.  The DHT11 and DHT12 are notoriously inaccurate temperature sensors, though they are cheap and may be good enough for simple applications.  This driver uses bit banging on GPIO pins and may not make the best use of resources on your ESP32.  Consider alternative temperature sensors, such as the SHT3x or Bosch BMP or BME line of sensors.
+> Note.  The DHT11 and DHT22 are notoriously inaccurate temperature sensors, though they are cheap and may be good enough for simple applications.  This driver uses bit banging on GPIO pins and may not make the best use of resources on your ESP32.  Consider alternative temperature sensors, such as the SHT3x or Bosch BMP or BME line of sensors.
 
 ## Build Instructions
 
@@ -31,7 +31,7 @@ To start the DHT driver, use the `dht:start/1` function.  Pass in a configuratio
 | Key | Value | Default | Required | Description |
 |-----|-------|---------|----------|-------------|
 | `pin` | `integer()` | none | yes | The data pin to which the DHT11 or DHT22 is connected. |
-| `device` | `dht_11 \| dht_12` | `dht_11` | no | The device type (DHT11 or DHT12). |
+| `device` | `dht_11 \| dht_22` | `dht_11` | no | The device type (DHT11 or DHT22). |
 
 For example:
 
