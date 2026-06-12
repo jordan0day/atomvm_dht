@@ -18,6 +18,14 @@
 # SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
 #
 
+if (IDF_VERSION_MAJOR EQUAL 5)
+    set(OPTIONAL_WHOLE_ARCHIVE WHOLE_ARCHIVE)
+    set(ADDITIONAL_REQUIRES "driver" "esp_timer")
+else()
+    set(OPTIONAL_WHOLE_ARCHIVE "")
+    set(ADDITIONAL_REQUIRES "")
+endif()
+
 set(ATOMVM_DHT_COMPONENT_SRCS
     "nifs/atomvm_dht.c"
 )
@@ -25,10 +33,12 @@ set(ATOMVM_DHT_COMPONENT_SRCS
 idf_component_register(
     SRCS ${ATOMVM_DHT_COMPONENT_SRCS}
     INCLUDE_DIRS "nifs/include"
-    PRIV_REQUIRES "libatomvm" "avm_sys"
+    PRIV_REQUIRES "libatomvm" "avm_sys" ${ADDITIONAL_REQUIRES}
+    ${OPTIONAL_WHOLE_ARCHIVE}
 )
 
-idf_build_set_property(
-    LINK_OPTIONS "-Wl,--whole-archive ${CMAKE_CURRENT_BINARY_DIR}/lib${COMPONENT_NAME}.a -Wl,--no-whole-archive"
-    APPEND
-)
+if (IDF_VERSION_MAJOR EQUAL 4)
+    idf_build_set_property(
+        LINK_OPTIONS "-Wl,--whole-archive ${CMAKE_CURRENT_BINARY_DIR}/lib${COMPONENT_NAME}.a -Wl,--no-whole-archive"
+        APPEND)
+endif()
